@@ -1,11 +1,22 @@
 {
-  "name": "imagemagick-wasm",
-  "version": "0.0.1",
+  "name": "@jspawn/imagemagick-wasm",
+  "version": "0.0.2",
+  "description": "imagemagick compiled to WASM",
+  "main": "magick.js",
+  "module": "magick.mjs",
+  "files": [
+    "magick.*"
+  ],
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha.js --node-option experimental-wasm-bigint tests/node"
   },
-  "license": "(MIT OR Apache-2.0)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jsscheller/imagemagick-wasm.git"
+  },
+  "license": "Apache-2.0",
   "devDependencies": {
     "mocha": "^10.0.0"
-  }
+  },
+  "dependencies": {}
 }

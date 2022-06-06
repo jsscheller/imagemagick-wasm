@@ -151,6 +151,7 @@ emconfigure ./configure \
   --enable-zero-configuration
 emmake make -j install
 
+mkdir -p "$ROOT/dist"
 cd "$ROOT/lib/ImageMagick"
 /bin/bash ./libtool \
   --silent \
@@ -168,7 +169,7 @@ cd "$ROOT/lib/ImageMagick"
   -s INCOMING_MODULE_JS_API='["noInitialRun","noFSInit","locateFile","preRun"]' \
   -s NO_DISABLE_EXCEPTION_CATCHING=1 \
   -s MODULARIZE=1 \
-  -o "$OUT_DIR/magick.js" \
+  -o "$ROOT/dist/magick.js" \
   "$OUT_DIR/lib/libMagickCore-7.Q16HDRI.a" \
   "$OUT_DIR/lib/libMagickWand-7.Q16HDRI.a" \
   "utilities/magick.o" \

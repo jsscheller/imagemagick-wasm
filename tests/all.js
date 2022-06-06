@@ -134,9 +134,7 @@ describe("conversions", function () {
 let _cachedMod;
 async function callMain(args) {
   if (!_cachedMod) {
-    _cachedMod = await Module({
-      noInitialRun: true,
-    });
+    _cachedMod = await Module();
     const working = "/working";
     _cachedMod.FS.mkdir(working);
     _cachedMod.FS.mount(_cachedMod.NODEFS, { root: __dirname }, working);
