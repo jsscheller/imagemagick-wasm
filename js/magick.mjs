@@ -16,9 +16,9 @@ export default function () {
       if (mods) {
         globalThis.__dirname = mods[0].dirname(import.meta.url);
         globalThis.require = mods[1].createRequire(import.meta.url);
-        return require("./magick.js")(args);
+        return require("./magick.js").apply(undefined, args);
       } else {
-        return (createModuleFromExports || createModule)(args);
+        return (createModuleFromExports || createModule).apply(undefined, args);
       }
     });
 }

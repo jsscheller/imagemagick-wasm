@@ -1,12 +1,9 @@
 {
   "name": "@jspawn/imagemagick-wasm",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "imagemagick compiled to WASM",
   "main": "magick.js",
   "module": "magick.mjs",
-  "files": [
-    "magick.*"
-  ],
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha.js --node-option experimental-wasm-bigint tests/node"
   },
