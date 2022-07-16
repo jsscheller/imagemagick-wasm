@@ -5,7 +5,7 @@
   "main": "magick.js",
   "module": "magick.mjs",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha.js --node-option experimental-wasm-bigint tests"
+    "test": "./node_modules/mocha/bin/mocha.js tests"
   },
   "repository": {
     "type": "git",

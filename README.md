@@ -46,7 +46,7 @@ Run with:
 
 ```sh
 # Depending on your version of node, you may not need the experimental flag.
-node --experimental-wasm-bigint index.js
+node --experimental-wasm-bigint index.mjs
 ```
 
 ### Browser
@@ -58,10 +58,10 @@ import createModule from "https://unpkg.com/@jspawn/imagemagick-wasm/magick.mjs"
 
 // Returns an Emscripten "Module": https://emscripten.org/docs/api_reference/module.html
 // NOTE: only parts of the Module object are exposed due to minification - see `build.sh`.
-  const magick = await createModule({
-    // Tell Emscripten where the WASM file is located.
-    locateFile: () => "https://unpkg.com/@jspawn/imagemagick-wasm/magick.wasm",
-  });
+const magick = await createModule({
+  // Tell Emscripten where the WASM file is located.
+  locateFile: () => "https://unpkg.com/@jspawn/imagemagick-wasm/magick.wasm",
+});
 
 // Writes a blank image to `blank.png` (via Emscripten's in-memory filesystem).
 magick.callMain(["-size", "100x100", "xc:blue", "blue.png"]);
