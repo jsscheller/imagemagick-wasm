@@ -1,6 +1,6 @@
 {
   "name": "@jspawn/imagemagick-wasm",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "imagemagick compiled to WASM",
   "main": "magick.js",
   "module": "magick.mjs",
