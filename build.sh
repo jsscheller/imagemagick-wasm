@@ -184,3 +184,6 @@ cd "$ROOT/lib/ImageMagick"
   -ljpeg \
   -lz \
   -llcms2
+
+# fix for Emscripten bug which minifies the `spawnSync` command
+sed -i 's/require("child_process").Kd/require("child_process").spawnSync/g' "$ROOT/dist/magick.js"
