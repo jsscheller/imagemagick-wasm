@@ -110,6 +110,22 @@ emconfigure ./configure \
 emmake make -j install
 '
 
+cd "$ROOT/lib/freetype"
+fn_git_clean
+mkdir __build
+cd __build
+emcmake cmake \
+  .. \
+  -DCMAKE_INSTALL_PREFIX="$OUT_DIR" \
+  -DZLIB_INCLUDE_DIR="$OUT_DIR/include" \
+  -DZLIB_LIBRARY="$OUT_DIR/lib/libz.a" \
+  -DCMAKE_DISABLE_FIND_PACKAGE_BZip2=TRUE \
+  -DCMAKE_DISABLE_FIND_PACKAGE_PNG=TRUE \
+  -DBUILD_SHARED_LIBS=off \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_C_FLAGS="$CFLAGS"
+emmake make -j install
+
 cd "$ROOT/lib/ImageMagick"
 fn_git_clean
 autoreconf -fiv
@@ -126,7 +142,6 @@ emconfigure ./configure \
   --disable-openmp \
   --without-bzlib \
   --without-dps \
-  --without-freetype \
   --without-jbig \
   --without-openjp2 \
   --with-lcms=yes \
@@ -166,7 +181,7 @@ cd "$ROOT/lib/ImageMagick"
   -s WASM_BIGINT=1 \
   -s ALLOW_MEMORY_GROWTH=1 \
   -s EXPORTED_RUNTIME_METHODS='["callMain","FS","NODEFS","WORKERFS","ENV"]' \
-  -s INCOMING_MODULE_JS_API='["noInitialRun","noFSInit","locateFile","preRun"]' \
+  -s INCOMING_MODULE_JS_API='["noInitialRun","noFSInit","locateFile","preRun","instantiateWasm"]' \
   -s NO_DISABLE_EXCEPTION_CATCHING=1 \
   -s MODULARIZE=1 \
   -o "$ROOT/dist/magick.js" \
@@ -183,7 +198,8 @@ cd "$ROOT/lib/ImageMagick"
   -lpng \
   -ljpeg \
   -lz \
-  -llcms2
+  -llcms2 \
+  -lfreetype
 
 # fix for Emscripten bug which minifies the `spawnSync` command
 sed -i 's/require("child_process").Kd/require("child_process").spawnSync/g' "$ROOT/dist/magick.js"

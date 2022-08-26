@@ -14,12 +14,13 @@ Notable supported features:
 - WEBP image format
 - Colorspace management (via lcms)
 - Fourier Transforms (via fftw)
+- Text
 
 Notable missing features:
 
 - Liquid rescaling
-- Text
-- Various image formats for which the delegate library is missing
+- SVG
+- Probably other image formats for which the delegate library is missing
 
 ## Examples
 

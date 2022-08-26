@@ -25,3 +25,6 @@
 [submodule "lib/lqr"]
 	path = lib/lqr
 	url = https://github.com/ImageMagick/lqr.git
+[submodule "lib/freetype"]
+	path = lib/freetype
+	url = https://github.com/ImageMagick/freetype.git

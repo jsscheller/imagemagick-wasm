@@ -7,9 +7,28 @@ before(async function () {
   await fs.mkdir(path.join(__dirname, "out"), { recursive: true });
 });
 
+describe("text", function () {
+  it("should create label", async function () {
+    const code = await callMain([
+      "-size",
+      "100x100",
+      "-font",
+      "assets/ShareTechMono-Regular.ttf",
+      "label:test",
+      "out/label.png",
+    ]);
+    assert.equal(code, 0);
+  });
+});
+
 describe("colorspace", function () {
   it("gray", async function () {
-    const code = await callMain(["assets/sample.jpg", "-colorspace", "Gray", "out/out.jpg"]);
+    const code = await callMain([
+      "assets/sample.jpg",
+      "-colorspace",
+      "Gray",
+      "out/out.jpg",
+    ]);
     assert.equal(code, 0);
   });
 });
@@ -61,7 +80,12 @@ describe("conversions", function () {
   });
 
   it("png => ico", async function () {
-    const code = await callMain(["assets/sample.png", "-resize", "256x", "out/out.ico"]);
+    const code = await callMain([
+      "assets/sample.png",
+      "-resize",
+      "256x",
+      "out/out.ico",
+    ]);
     assert.equal(code, 0);
   });
 
