@@ -1,8 +1,8 @@
 node_modules
-dist
 out
-pkg
 target
+assets
+lib
 *.sublime-project
 *.sublime-workspace
 *.DS_Store

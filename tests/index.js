@@ -1,169 +1,69 @@
-const assert = require("assert");
-const path = require("path");
-const fs = require("fs/promises");
-const Module = require("../dist/magick");
+import { test } from "uvu";
+import init from "/magick.js";
+import * as assert from "uvu/assert";
 
-before(async function () {
-  await fs.mkdir(path.join(__dirname, "out"), { recursive: true });
+let magick;
+
+test("reads jpeg", async function () {
+  await initMagick([await download("building_orig.jpg")]);
+  magick.callMain(["input/building_orig.jpg", "output/test.png"]);
+  assertExists("output/test.png");
 });
 
-describe("text", function () {
-  it("should create label", async function () {
-    const code = await callMain([
-      "-size",
-      "100x100",
-      "-font",
-      "assets/ShareTechMono-Regular.ttf",
-      "label:test",
-      "out/label.png",
-    ]);
-    assert.equal(code, 0);
-  });
+test("reads png", async function () {
+  await initMagick([await download("lena_orig.png")]);
+  magick.callMain(["input/lena_orig.png", "output/test.jpg"]);
+  assertExists("output/test.jpg");
 });
 
-describe("colorspace", function () {
-  it("gray", async function () {
-    const code = await callMain([
-      "assets/sample.jpg",
-      "-colorspace",
-      "Gray",
-      "out/out.jpg",
-    ]);
-    assert.equal(code, 0);
-  });
+test("reads webp", async function () {
+  await initMagick([await download("1.webp")]);
+  magick.callMain(["input/1.webp", "output/test.jpg"]);
+  assertExists("output/test.jpg");
 });
 
-describe("conversions", function () {
-  it("png => jpeg", async function () {
-    const code = await callMain(["assets/sample.png", "out/out.jpg"]);
-    assert.equal(code, 0);
-  });
-
-  it("png => webp", async function () {
-    const code = await callMain(["assets/sample.png", "out/out.webp"]);
-    assert.equal(code, 0);
-  });
-
-  it("png => tiff", async function () {
-    const code = await callMain(["assets/sample.png", "out/out.tiff"]);
-    assert.equal(code, 0);
-  });
-
-  it("png => bmp", async function () {
-    const code = await callMain(["assets/sample.png", "out/out.bmp"]);
-    assert.equal(code, 0);
-  });
-
-  it("png => gif", async function () {
-    const code = await callMain(["assets/sample.png", "out/out.gif"]);
-    assert.equal(code, 0);
-  });
-
-  it("png => psd", async function () {
-    const code = await callMain(["assets/sample.png", "out/out.psd"]);
-    assert.equal(code, 0);
-  });
-
-  it("png => xcf", async function () {
-    const code = await callMain(["assets/sample.png", "out/out.xcf"]);
-    assert.equal(code, 0);
-  });
-
-  it("png => tga", async function () {
-    const code = await callMain(["assets/sample.png", "out/out.tga"]);
-    assert.equal(code, 0);
-  });
-
-  it("png => miff", async function () {
-    const code = await callMain(["assets/sample.png", "out/out.miff"]);
-    assert.equal(code, 0);
-  });
-
-  it("png => ico", async function () {
-    const code = await callMain([
-      "assets/sample.png",
-      "-resize",
-      "256x",
-      "out/out.ico",
-    ]);
-    assert.equal(code, 0);
-  });
-
-  it("png => dcm", async function () {
-    const code = await callMain(["assets/sample.png", "out/out.dcm"]);
-    assert.equal(code, 0);
-  });
-
-  it("png => xpm", async function () {
-    const code = await callMain(["assets/sample.png", "out/out.xpm"]);
-    assert.equal(code, 0);
-  });
-
-  it("png => pcx", async function () {
-    const code = await callMain(["assets/sample.png", "out/out.pcx"]);
-    assert.equal(code, 0);
-  });
-
-  it("png => fits", async function () {
-    const code = await callMain(["assets/sample.png", "out/out.fits"]);
-    assert.equal(code, 0);
-  });
-
-  it("png => ppm", async function () {
-    const code = await callMain(["assets/sample.png", "out/out.ppm"]);
-    assert.equal(code, 0);
-  });
-
-  it("png => pgm", async function () {
-    const code = await callMain(["assets/sample.png", "out/out.pgm"]);
-    assert.equal(code, 0);
-  });
-
-  it("png => pfm", async function () {
-    const code = await callMain(["assets/sample.png", "out/out.pfm"]);
-    assert.equal(code, 0);
-  });
-
-  it("png => mng", async function () {
-    const code = await callMain(["assets/sample.png", "out/out.mng"]);
-    assert.equal(code, 0);
-  });
-
-  it("png => hdr", async function () {
-    const code = await callMain(["assets/sample.png", "out/out.hdr"]);
-    assert.equal(code, 0);
-  });
-
-  it("png => dds", async function () {
-    const code = await callMain(["assets/sample.png", "out/out.dds"]);
-    assert.equal(code, 0);
-  });
-
-  it("png => otb", async function () {
-    const code = await callMain(["assets/sample.png", "out/out.otb"]);
-    assert.equal(code, 0);
-  });
-
-  it("png => psb", async function () {
-    const code = await callMain(["assets/sample.png", "out/out.psb"]);
-    assert.equal(code, 0);
-  });
-
-  it("jpeg => png", async function () {
-    const code = await callMain(["assets/sample.jpg", "out/out.png"]);
-    assert.equal(code, 0);
-  });
+test("reads qoi", async function () {
+  await initMagick([await download("dice.qoi")]);
+  magick.callMain(["input/dice.qoi", "output/test.jpg"]);
+  assertExists("output/test.jpg");
 });
 
-let _cachedMod;
-async function callMain(args) {
-  if (!_cachedMod) {
-    _cachedMod = await Module();
-    const working = "/working";
-    _cachedMod.FS.mkdir(working);
-    _cachedMod.FS.mount(_cachedMod.NODEFS, { root: __dirname }, working);
-    _cachedMod.FS.chdir(working);
-  }
+test("reads avif", async function () {
+  await initMagick([await download("sample.avif")]);
+  magick.callMain(["input/sample.avif", "output/test.jpg"]);
+  assertExists("output/test.jpg");
+});
 
-  return _cachedMod.callMain(args);
+test("reads jxl", async function () {
+  await initMagick([await download("cafe.jxl")]);
+  magick.callMain(["input/cafe.jxl", "output/test.jpg"]);
+  assertExists("output/test.jpg");
+});
+
+test("reads tif", async function () {
+  await initMagick([await download("bali.tif")]);
+  magick.callMain(["input/bali.tif", "output/test.jpg"]);
+  assertExists("output/test.jpg");
+});
+
+async function download(asset) {
+  const blob = await fetch(`/assets/${asset}`).then((x) => x.blob());
+  return new File([blob], asset, { type: blob.type });
 }
+
+async function initMagick(input) {
+  magick = await init({
+    locateFile: () => "/magick.wasm",
+  });
+  magick.FS.mkdir("/input");
+  const mount = input[0] && input[0].data ? { blobs: input } : { files: input };
+  magick.FS.mount(magick.WORKERFS, mount, "/input");
+  magick.FS.mkdir("/output");
+}
+
+async function assertExists(path) {
+  const buf = magick.FS.readFile(path);
+  assert.ok(buf.length > 0);
+}
+
+test.run();

@@ -1,19 +1,18 @@
 {
-  "name": "@jspawn/imagemagick-wasm",
-  "version": "0.2.0",
-  "description": "imagemagick compiled to WASM",
+  "name": "imagemagick-wasm",
+  "version": "0.3.0",
+  "description": "magick CLI compiled to WASM",
+  "type": "module",
   "main": "magick.js",
-  "module": "magick.mjs",
-  "scripts": {
-    "test": "./node_modules/mocha/bin/mocha.js tests"
-  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jsscheller/imagemagick-wasm.git"
+    "url": "git+https://github.com/jsscheller/imagemagick-wasm.git"
   },
   "license": "Apache-2.0",
   "devDependencies": {
-    "mocha": "^10.0.0"
-  },
-  "dependencies": {}
+    "esbuild": "^0.21.2",
+    "runish": "^0.1.0",
+    "serdev": "^0.1.0",
+    "uvu": "^0.5.6"
+  }
 }
